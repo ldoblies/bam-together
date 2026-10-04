@@ -1,0 +1,21 @@
+## Interface: 16001
+## Title: Bam Together
+## Notes: Classic BAM sound for critical hits, shared with your party, with optional damage messages and BAAAM finishers.
+## Notes-deDE: Klassischer BAM-Sound für kritische Treffer, geteilt mit deiner Gruppe, mit optionaler Schadensmeldung und BAAAM-Finisher.
+## Notes-enUS: Classic BAM sound for critical hits, shared with your party, with optional damage messages and BAAAM finishers.
+## Notes-enGB: Classic BAM sound for critical hits, shared with your party, with optional damage messages and BAAAM finishers.
+## Notes-esES: Sonido BAM clásico para golpes críticos, compartido con tu grupo, con mensajes de daño opcionales y remates BAAAM.
+## Notes-esMX: Sonido BAM clásico para golpes críticos, compartido con tu grupo, con mensajes de daño opcionales y remates BAAAM.
+## Notes-frFR: Son BAM classique pour les coups critiques, partagé avec votre groupe, avec messages de dégâts optionnels et finitions BAAAM.
+## Notes-itIT: Classico suono BAM per i colpi critici, condiviso con il tuo gruppo, con messaggi di danno opzionali e colpi finali BAAAM.
+## Author: Snardge (Bam Together), Fedex1991 (Bam! Forever), maggo (Original Bam!)
+## IconTexture: Interface\AddOns\BamTogether\icon
+## Category: Combat
+## Version: 1.0.0
+## SavedVariablesPerCharacter: BamTogetherSettings
+## DefaultState: Enabled
+## X-License: MIT
+
+Localization.lua
+Core.lua
+Settings.lua
