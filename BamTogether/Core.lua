@@ -2,7 +2,6 @@ local ADDON_NAME, Bam = ...
 local L = Bam.L
 
 Bam.version = "1.0.0"
-Bam.displayName = "Bam Together"
 
 local SOUND_DIR = "Interface\\AddOns\\BamTogether\\sounds\\"
 
@@ -63,19 +62,7 @@ end
 
 function Bam:InitDB()
     if type(BamTogetherSettings) ~= "table" then BamTogetherSettings = {} end
-
-    if BamTogetherSettings.meleeCrits == nil and BamTogetherSettings.TRIGGER_ON_SWING ~= nil then
-        BamTogetherSettings.meleeCrits = BamTogetherSettings.TRIGGER_ON_SWING and true or false
-    end
-    if BamTogetherSettings.finisherBaaam == nil and BamTogetherSettings.BAAAM_ON_OVERKILL ~= nil then
-        BamTogetherSettings.finisherBaaam = BamTogetherSettings.BAAAM_ON_OVERKILL and true or false
-    end
-    if BamTogetherSettings.throttle == nil and BamTogetherSettings.THROTTLE_SOUNDS ~= nil then
-        BamTogetherSettings.throttle = BamTogetherSettings.THROTTLE_SOUNDS and 2 or 0.25
-    end
-
     copyDefaults(BamTogetherSettings)
-    BamTogetherSettings.popup = nil
     for _, key in ipairs({ "critSound", "finisherSound" }) do
         local choice = BamTogetherSettings[key]
         if choice ~= "shuffle" and not soundsById[choice] then BamTogetherSettings[key] = defaults[key] end
@@ -172,7 +159,7 @@ function Bam:SoundName(choice)
     return soundsById[choice] and soundsById[choice].name or tostring(choice)
 end
 
-function Bam:Play(soundId, amount, preview)
+function Bam:Play(soundId, preview)
     if not preview and not self:CanPlay() then return false end
     local sound = soundsById[soundId] or soundsById.bam
     local ok = PlaySoundFile(SOUND_DIR .. sound.file, "Master")
@@ -261,7 +248,7 @@ local function classifyCrit(unit)
     return nil
 end
 
-function Bam:PrintCrit(kind, amount, unit, killed, combatLogTargetName, senderName)
+function Bam:PrintCrit(amount, unit, killed, combatLogTargetName, senderName)
     if not self.db or not self.db.critChat then return end
     if self:IsContextMuted() then return end
     local value = formatNumber(amount)
@@ -326,8 +313,8 @@ function Bam:ReceivePartyCrit(text, sender)
     local isFinisher = kindChar == "A"
     if not soundsById[soundId] then soundId = isFinisher and "baaam" or "bam" end
 
-    self:PrintCrit(nil, amount, nil, isFinisher, targetName, senderName)
-    self:Play(soundId, nil, false)
+    self:PrintCrit(amount, nil, isFinisher, targetName, senderName)
+    self:Play(soundId, false)
     if self.db.debug then
         self:Print(L.PARTY_RECEIVED .. ": sender=" .. senderName .. " msg=" .. text)
     end
@@ -374,8 +361,8 @@ local function handleCritical(unit, amount)
             end
             return
         end
-        Bam:PrintCrit(kind, amount, sameUnit and unit or nil, isFinisher)
-        Bam:Play(soundId, amount, false)
+        Bam:PrintCrit(amount, sameUnit and unit or nil, isFinisher)
+        Bam:Play(soundId, false)
         if Bam.db.debug then
             local prefix = kind == "spell" and L.SPELL_CRIT or L.MELEE_CRIT
             Bam:Print(prefix .. ": amount=" .. tostring(amount or "?")
@@ -448,9 +435,9 @@ function Bam:RegisterSlashCommands()
     SlashCmdList.BAM = function(msg)
         msg = (msg or ""):lower():match("^%s*(.-)%s*$")
         if msg == "test" then
-            Bam:Play(Bam:ResolveSound(Bam.db.critSound, false), nil, true)
+            Bam:Play(Bam:ResolveSound(Bam.db.critSound, false), true)
         elseif msg == "testbig" or msg == "baaam" then
-            Bam:Play(Bam:ResolveSound(Bam.db.finisherSound, true), nil, true)
+            Bam:Play(Bam:ResolveSound(Bam.db.finisherSound, true), true)
         elseif msg == "on" then
             Bam.db.enabled = true
             Bam:Print(L.ENABLED_MSG)

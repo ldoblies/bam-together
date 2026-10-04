@@ -57,7 +57,7 @@ local function soundPicker(parent, key, finisher, y)
     button(parent, "<", 22, y, 26, function() cycleSound(key, -1) end)
     button(parent, ">", 50, y, 26, function() cycleSound(key, 1) end)
     button(parent, L.TEST, 420, y, 120, function()
-        Bam:Play(Bam:ResolveSound(Bam.db[key], finisher), nil, true)
+        Bam:Play(Bam:ResolveSound(Bam.db[key], finisher), true)
     end)
     return label(parent, "", 86, y - 6, 320)
 end

@@ -197,5 +197,3 @@ Bam.L = setmetatable({}, {
         return active[key] or fallback[key] or key
     end,
 })
-
-Bam.locale = locale
