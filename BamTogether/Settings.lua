@@ -110,7 +110,7 @@ function Bam:OpenSettings()
 
         f.detectionTitle = label(f, L.DETECTION, 22, -655, 500, "GameFontNormal")
         f.detectionHelp = label(f, L.DETECTION_HELP, 22, -680, 525, "GameFontDisableSmall")
-        f.footer = label(f, "Bam Together v" .. tostring(Bam.version) .. "  ·  based on Bam! Forever by Fedex1991", 22, -710, 525, "GameFontDisableSmall")
+        f.footer = label(f, "Bam Together v" .. tostring(Bam.version) .. " by Snardge", 22, -710, 525, "GameFontDisableSmall")
 
         if UISpecialFrames then UISpecialFrames[#UISpecialFrames+1] = "BamTogetherSettingsFrame" end
         f:SetScript("OnShow", function() Bam:RefreshSettings() end)
